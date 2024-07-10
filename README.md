@@ -1,6 +1,6 @@
 driver for 7-segment led:
 
-echo "<digit>" > /dev/dib7seg - displays number on the device
+echo "some-digit" > /dev/dib7seg - displays number on the device
 
 cat /dev/dib7seg - reads number
 
