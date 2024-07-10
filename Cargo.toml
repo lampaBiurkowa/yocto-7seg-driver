@@ -1,0 +1,8 @@
+[package]
+name = "rust-7seg"
+version = "0.1.0"
+edition = "2021"
+repository = "https://github.com/lampaBiurkowa/yocto-7seg-driver.git"
+description = "based on Yocto Project Virtual Summit 2020 demo"
+
+[dependencies]
