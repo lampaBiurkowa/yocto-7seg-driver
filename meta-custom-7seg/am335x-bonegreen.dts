@@ -1,0 +1,98 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Copyright (C) 2012 Texas Instruments Incorporated - https://www.ti.com/
+ */
+/dts-v1/;
+
+#include "am33xx.dtsi"
+#include "am335x-bone-common.dtsi"
+#include "am335x-bonegreen-common.dtsi"
+
+/ {
+	model = "TI AM335x BeagleBone Green";
+	compatible = "ti,am335x-bone-green", "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
+
+	mybuttons {
+        compatible = "packt,gpio-descriptor-mybuttons";
+        pinctrl-names = "default";
+        pinctrl-0 = <&custom_buttons>;
+		
+		buttonInc {
+			gpios = <&gpio1 15 GPIO_ACTIVE_LOW>;
+			label = "myincbutton";
+		};
+
+		buttonDec {
+			gpios = <&gpio1 14 GPIO_ACTIVE_LOW>;
+			label = "mydecbutton";
+		};
+	};
+
+	my7seg {
+        compatible = "packt,gpio-descriptor-my7seg";
+        pinctrl-names = "default";
+        pinctrl-0 = <&custom_7seg>;
+		
+		seg0 {
+			gpios = <&gpio0 30 GPIO_ACTIVE_HIGH>;
+			label = "myseg0";
+		};
+
+		seg1 {
+			gpios = <&gpio1 28 GPIO_ACTIVE_HIGH>;
+			label = "myseg1";
+		};
+
+		seg2 {
+			gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;
+			label = "myseg2";
+		};
+
+		seg3 {
+			gpios = <&gpio1 18 GPIO_ACTIVE_HIGH>;
+			label = "myseg3";
+		};
+
+		seg4 {
+			gpios = <&gpio1 16 GPIO_ACTIVE_HIGH>;
+			label = "myseg4";
+		};
+
+		seg5 {
+			gpios = <&gpio1 19 GPIO_ACTIVE_HIGH>;
+			label = "myseg5";
+		};
+
+		seg6 {
+			gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
+			label = "myseg6";
+		};
+
+		seg7 {
+			gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
+			label = "myseg7";
+		};
+	};
+};
+
+&am33xx_pinmux {
+	custom_buttons: custom_buttons {
+        pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD15, PIN_INPUT_PULLUP, MUX_MODE7) /* GPIO1_15 */
+			AM33XX_PADCONF(AM335X_PIN_GPMC_AD14, PIN_INPUT_PULLUP, MUX_MODE7) /* GPIO1_14 */
+        >;
+    };
+	
+	custom_7seg: custom_7seg {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_WAIT0, PIN_OUTPUT_PULLUP, MUX_MODE7) /* GPIO0_30 */
+			AM33XX_PADCONF(AM335X_PIN_GPMC_BEN1, PIN_OUTPUT_PULLUP, MUX_MODE7) /* GPIO1_28 */
+			AM33XX_PADCONF(AM335X_PIN_GPMC_WPN, PIN_OUTPUT_PULLUP, MUX_MODE7) /* GPIO0_31 */
+			AM33XX_PADCONF(AM335X_PIN_GPMC_A2, PIN_OUTPUT_PULLUP, MUX_MODE7) /* GPIO1_18 */
+			AM33XX_PADCONF(AM335X_PIN_GPMC_A0, PIN_OUTPUT_PULLUP, MUX_MODE7) /* GPIO1_16 */
+			AM33XX_PADCONF(AM335X_PIN_GPMC_A3, PIN_OUTPUT_PULLUP, MUX_MODE7) /* GPIO1_19 */
+			AM33XX_PADCONF(AM335X_PIN_SPI0_CS0, PIN_OUTPUT_PULLUP, MUX_MODE7) /* GPIO0_5 */
+			AM33XX_PADCONF(AM335X_PIN_SPI0_D1, PIN_OUTPUT_PULLUP, MUX_MODE7) /* GPIO0_4 */
+		>;
+	};
+};
