@@ -37,11 +37,11 @@ static void display_number(int num) {
     static const char digits[10][8] = {
         {1, 1, 1, 1, 1, 1, 0, 0},  // 0
         {0, 1, 1, 0, 0, 0, 0, 0},  // 1
-        {1, 1, 0, 1, 1, 0, 1, 0},  // 2
+        {1, 1, 0, 1, 1, 0, 1, 1},  // 2
         {1, 1, 1, 1, 0, 0, 1, 0},  // 3
         {0, 1, 1, 0, 0, 1, 1, 0},  // 4
         {1, 0, 1, 1, 0, 1, 1, 0},  // 5
-        {1, 0, 1, 1, 1, 1, 1, 0},  // 6
+        {1, 0, 1, 1, 1, 1, 1, 1},  // 6
         {1, 1, 1, 0, 0, 0, 0, 0},  // 7
         {1, 1, 1, 1, 1, 1, 1, 0},  // 8
         {1, 1, 1, 1, 0, 1, 1, 0}   // 9
@@ -163,10 +163,8 @@ static void __exit my_driver_exit(void) {
     }
     gpiod_put(button_inc);
     gpiod_put(button_dec);
-
     free_irq(gpiod_to_irq(button_inc), NULL);
     free_irq(gpiod_to_irq(button_dec), NULL);
-
     device_destroy(myDriverClass, MKDEV(majorNumber, 0));
     class_unregister(myDriverClass);
     class_destroy(myDriverClass);
@@ -177,6 +175,10 @@ static void __exit my_driver_exit(void) {
 
 static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *offset) {
     char buf[8];
+    if (*offset > 0) {
+        return 0;
+    }
+
     int output = sprintf(buf, "%d\n", number);
     if (copy_to_user(buffer, buf, sizeof(buf))) {
         pr_info("Failed to read number\n"); 
@@ -184,7 +186,7 @@ static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *of
     }
 
     *offset += sizeof(buf);
-    return sizeof(buf);//simple_read_from_buffer(buffer, len, offset, buf, ret);
+    return sizeof(buf);
 }
 
 static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, loff_t *offset) {
