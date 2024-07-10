@@ -1,7 +1,9 @@
 driver for 7-segment led:
 
 echo "<digit>" > /dev/dib7seg - displays number on the device
+
 cat /dev/dib7seg - reads number
+
 2 buttons - clicking them increments/decrements the number
 
 also a sample rust app for user space
