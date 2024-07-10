@@ -22,7 +22,7 @@ fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
-        print_usage();
+        println!("Too few arguments");
         return Ok(());
     }
 
@@ -33,7 +33,8 @@ fn main() -> io::Result<()> {
         }
         "write" => {
             if args.len() < 3 {
-                print_usage();
+                println!("Too few arguments");
+                return Ok(());
             } else {
                 write_value(&args[2])?;
                 println!("Value written: {}", args[2]);
